@@ -17,27 +17,36 @@ struct LoginView: View {
                        subtitle: "Get things done",
                        angle: 15,
                        background: .pink)
-            // Login Form
+            
             Form{
+                if !viewModel.errorMessage.isEmpty{
+                    Text(viewModel.errorMessage)
+                        .foregroundColor(Color.red)
+                }
+                
                 TextField("Email Address", text: $viewModel.email)
                     .textFieldStyle(DefaultTextFieldStyle())
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
                 
-                SecureField("Password", text: viewModel.password)
+                SecureField("Password", text: $viewModel.password)
                     .textFieldStyle(DefaultTextFieldStyle())
                 TLButton(title: "Log In",
                          background: .blue
                 ){
-                    // attemp login
+                    viewModel.login()
                 }
                 .padding()
             }
             // Create Account
             VStack{
                 Text("New around here?")
-                NavigationLink("Create An Account",
-                               destination: RegisterView())
+//                NavigationLink("Create An Account",
+//                               destination: RegisterView())
+                // NavigationLink button
+                   NavigationLink(destination: RegisterView()) {
+                       Text("Create an Account")
+                   }
             }
             .padding(.bottom, 50)
             Spacer()
